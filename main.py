@@ -1,7 +1,7 @@
 import pygame
-from food import Food
 
 from consts import *
+from food import Food
 from snake import Snake, Direction
 
 
@@ -26,6 +26,7 @@ def main():
 
     food = Food(block_size=BLOCK_SIZE, bounds=WINDOW_SIZE)
     snake = Snake(block_size=BLOCK_SIZE, bounds=WINDOW_SIZE)
+    #snake_heal = font.render(f'{snake.get_hp()}', True, TEXT_COLOR)
 
     is_run = True
 
@@ -35,17 +36,25 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_run = False
+        #snake_heal = font.render(f'{snake.get_hp()}', True, TXT_COLOR)
+        #window.blit(snake_heal, (50 ,50))
 
         handle_moving(snake)
         snake.move()
         snake.check_for_food(food)
+        snake_heal = font.render(f'{snake.get_hp()}', True, TXT_COLOR)
+        window.blit(snake_heal, (50, 50))
 
         if snake.check_bounds_collision() or snake.check_body_collision():
-            text = font.render('Game Over', True, TEXT_COLOR)
-            window.blit(text, (100, 200))
-            pygame.display.update()
-            pygame.time.delay(3000)
-            snake.spawn()
+            if snake.get_hp() < 1:
+                text = font.render('Game Over', True, TEXT_COLOR)
+                window.blit(text, (100, 200))
+                pygame.display.update()
+                pygame.time.delay(3000)
+                snake.spawn()
+            else:
+                snake = Snake(block_size=BLOCK_SIZE, bounds=WINDOW_SIZE)
+
             # food.respawn()
 
         window.fill(BACK_COLOR)

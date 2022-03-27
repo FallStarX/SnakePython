@@ -31,6 +31,7 @@ class Snake:
     color: tuple = SNAKE_COLOR
     direction: Direction = None
     block_size: int = None
+    hp: int = START_HP
     # body -- это список Python, содержащий кортежи (или пары) координат.
     # Каждая из этих координат описывает
     # верхние левые x и y положения экрана сегмента тела или блока.
@@ -113,3 +114,13 @@ class Snake:
             if head.x == segment.x and head.y == segment.y:
                 has_eaten_body=True
         return has_eaten_body
+
+    def snake_hp(self):
+        if Snake.eat():
+            Snake.hp += 1
+        if Snake.check_bounds_collision():
+            Snake.hp = -1
+    def get_hp(self):
+        return self.hp
+    def set_hp(self):
+        self.hp = -1
