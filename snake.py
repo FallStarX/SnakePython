@@ -3,6 +3,8 @@ from typing import List
 
 from consts import *
 
+from gamestate import Hp
+
 
 class Direction(Enum):
     UP = 0
@@ -117,10 +119,10 @@ class Snake:
 
     def snake_hp(self):
         if Snake.eat():
-            Snake.hp += 1
+            Snake.Hp += 1
         if Snake.check_bounds_collision():
-            Snake.hp = -1
+            Snake.Hp = -1
     def get_hp(self):
-        return self.hp
+        return self.Hp
     def set_hp(self):
-        self.hp = -1
+        self.Hp = -1
